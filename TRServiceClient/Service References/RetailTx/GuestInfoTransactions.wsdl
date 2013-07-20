@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:git="http://soap.harrahs.com" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://soap.harrahs.com/requestHarrahsServiceImpl" name="GuestInfoTransactions" targetNamespace="http://soap.harrahs.com/requestHarrahsServiceImpl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://soap.harrahs.com" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="requestGuestInfoService">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" ref="git:GuestInfoRequest" />
+            <xs:element minOccurs="0" ref="git:GuestInfoResponse" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GuestInfoRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" ref="git:accountNumber" />
+            <xs:element ref="git:searchType" />
+            <xs:element minOccurs="0" ref="git:transactionID" />
+            <xs:element minOccurs="0" ref="git:email" />
+            <xs:element minOccurs="0" ref="git:phone" />
+            <xs:element minOccurs="0" ref="git:firstName" />
+            <xs:element minOccurs="0" ref="git:lastName" />
+            <xs:element minOccurs="0" ref="git:source" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GuestInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element ref="git:resultStatus" />
+            <xs:element minOccurs="0" ref="git:resultCode" />
+            <xs:element minOccurs="0" ref="git:resultMessage" />
+            <xs:element minOccurs="0" ref="git:transactionID" />
+            <xs:element minOccurs="0" ref="git:count" />
+            <xs:element minOccurs="0" ref="git:guests" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="source" type="xs:string" />
+      <xs:element name="tierCode" type="xs:string" />
+      <xs:element name="tierDescription" type="xs:string" />
+      <xs:element name="guests">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" ref="git:guest" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="guest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" ref="git:accountNumber" />
+            <xs:element minOccurs="0" ref="git:firstName" />
+            <xs:element minOccurs="0" ref="git:lastName" />
+            <xs:element minOccurs="0" ref="git:tier" />
+            <xs:element minOccurs="0" ref="git:address" />
+            <xs:element minOccurs="0" ref="git:email" />
+            <xs:element minOccurs="0" ref="git:phone" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="tier">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" ref="git:tierCode" />
+            <xs:element minOccurs="0" ref="git:tierDescription" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="address">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" ref="git:address1" />
+            <xs:element minOccurs="0" ref="git:address2" />
+            <xs:element minOccurs="0" ref="git:city" />
+            <xs:element minOccurs="0" ref="git:stateCode" />
+            <xs:element minOccurs="0" ref="git:postalCode" />
+            <xs:element minOccurs="0" ref="git:countryCode" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="accountNumber" type="xs:string" />
+      <xs:element name="lastName" type="xs:string" />
+      <xs:element name="firstName" type="xs:string" />
+      <xs:element name="count" type="xs:string" />
+      <xs:element name="transactionID" type="xs:string" />
+      <xs:element name="searchType" type="xs:string" />
+      <xs:element name="address1" type="xs:string" />
+      <xs:element name="address2" type="xs:string" />
+      <xs:element name="city" type="xs:string" />
+      <xs:element name="stateCode" type="xs:string" />
+      <xs:element name="postalCode" type="xs:string" />
+      <xs:element name="countryCode" type="xs:string" />
+      <xs:element name="email" type="xs:string" />
+      <xs:element name="phone" type="xs:string" />
+      <xs:element name="resultCode" type="xs:string" />
+      <xs:element name="resultStatus">
+        <xs:complexType>
+          <xs:attribute name="STAT" use="required">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="SUCCESS" />
+                <xs:enumeration value="FAILURE" />
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="resultMessage" type="xs:string" />
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="GuestInfoRequest">
+    <wsdl:part name="guestInfoRequestInput" element="git:GuestInfoRequest" />
+  </wsdl:message>
+  <wsdl:message name="GuestInfoResponse">
+    <wsdl:part name="guestInfoRequestOutput" element="git:GuestInfoResponse" />
+  </wsdl:message>
+  <wsdl:portType name="InfoGuestTrnx_HTTP_Port">
+    <wsdl:operation name="getGuestInfo">
+      <wsdl:input message="tns:GuestInfoRequest" />
+      <wsdl:output message="tns:GuestInfoResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GuestInfoTxns_Soap_PortEndpointBinding" type="tns:InfoGuestTrnx_HTTP_Port">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getGuestInfo">
+      <soap:operation soapAction="/GuestInfoTransactions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" parts="guestInfoRequestInput" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" parts="guestInfoRequestOutput" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SOAP_sp_Service_sp_Listener">
+    <wsdl:port name="SOAPEventSource" binding="tns:GuestInfoTxns_Soap_PortEndpointBinding">
+      <soap:address location="https://10.3.26.146:8010/GuestInfoTransactions" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
